@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
+// Ensure the correct path to the image file
+import myImage from '../assets/my_image.png';
 
 const Hero = () => {
   const { theme } = useTheme();
@@ -92,7 +94,7 @@ const Hero = () => {
 
           {/* Right Column - Profile Image */}
           <motion.img
-            src="/src/assets/my_image.png"
+            src={myImage}
             alt="Rithesh"
             className={`
               order-1 lg:order-2
