@@ -120,7 +120,7 @@ export const TERMINAL_COMMANDS = {
     description: 'Display information about you',
     output: 'YOU ARE WHAT YOU ARE 🥸'
   },
-  whoru: {
+    whoru: {
     description: 'Display information about me',
     output: `${SITE_CONFIG.name} - ${SITE_CONFIG.title}
 Email: ${SITE_CONFIG.email}

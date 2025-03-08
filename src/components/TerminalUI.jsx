@@ -41,6 +41,9 @@ const TerminalUI = ({ isVisible, onClose }) => {
       case 'whoami':
         output = TERMINAL_COMMANDS.whoami.output;
         break;
+      case 'whoru':
+        output = TERMINAL_COMMANDS.whoru.output;
+        break;
       case 'clear':
         setHistory([
           { type: 'output', text: `Welcome to ${SITE_CONFIG.name}'s Terminal Portfolio!` },
