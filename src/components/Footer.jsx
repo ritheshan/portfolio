@@ -1,8 +1,22 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { SITE_CONFIG } from '../constants';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const socialLinks = [
     {
@@ -101,21 +115,22 @@ const Footer = () => {
           </motion.div>
 
           {/* Back to Top */}
-          <motion.button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="mt-4 p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-            viewport={{ once: true }}
-            title="Back to top"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-          </motion.button>
+          {isVisible && (
+            <motion.button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="fixed bottom-6 right-6 z-50 p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              title="Back to top"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+            </motion.button>
+          )}
         </div>
       </div>
     </motion.footer>
