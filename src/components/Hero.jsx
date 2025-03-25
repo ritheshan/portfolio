@@ -91,34 +91,25 @@ const Hero = () => {
           </motion.div>
 
           {/* Right Column - Profile Image */}
-          <motion.div 
-            className="order-1 lg:order-2 flex justify-center items-center"
+          <motion.img
+            src="/src/assets/my_image.png"
+            alt="Rithesh"
+            className={`
+              order-1 lg:order-2
+              w-full h-full
+              object-cover
+            `}
+            style={{
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+            }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ 
-              duration: 1, 
+            transition={{
+              duration: 1,
               delay: 0.8,
               ease: "easeOut"
             }}
-          >
-            <img
-              src="/src/assets/my_image.png"
-              alt="Rithesh"
-              className={`
-                w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem]
-                object-contain
-                shadow-[0_6px_20px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)]
-                hover:shadow-[0_8px_25px_rgba(0,0,0,0.12),0_3px_10px_rgba(0,0,0,0.06)]
-                transition-shadow duration-300
-                bg-white/50
-                backdrop-blur-sm
-              `}
-              style={{
-                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))',
-                transform: 'rotate(-0.5deg)'
-              }}
-            />
-          </motion.div>
+          />
         </div>
       </div>
     </section>
