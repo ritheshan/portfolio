@@ -10,9 +10,7 @@ const Skills = () => {
         { name: "TypeScript", icon: "🔷" },
         { name: "Node.js", icon: "🟢" },
         { name: "Python", icon: "🐍" },
-        { name: "Next.js", icon: "⚫" },
-        { name: "Vue.js", icon: "💚" },
-        { name: "Express", icon: "⚡" }
+        { name: "Next.js", icon: "⚫" }
       ]
     },
     {
@@ -23,27 +21,25 @@ const Skills = () => {
         { name: "AWS", icon: "☁️" },
         { name: "MongoDB", icon: "🍃" },
         { name: "PostgreSQL", icon: "🐘" },
-        { name: "Firebase", icon: "🔥" },
-        { name: "Vercel", icon: "▲" },
         { name: "Figma", icon: "🎨" }
       ]
     }
   ];
 
   return (
-    <section id="skills" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section id="skills" className="h-screen flex items-center justify-center bg-gray-50">
+      <div className="container mx-auto px-4 max-w-6xl">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-4xl font-bold text-center mb-16 text-gray-900"
+          className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900"
         >
           Skills & Technologies
         </motion.h2>
 
-        <div className="max-w-6xl mx-auto space-y-12">
+        <div className="space-y-8">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
@@ -51,13 +47,13 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-lg"
+              className="bg-white rounded-2xl p-6 shadow-lg"
             >
-              <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
                 {category.title}
               </h3>
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
                 {category.skills.map((skill, skillIndex) => (
                   <motion.div
                     key={skill.name}
@@ -73,12 +69,12 @@ const Skills = () => {
                       y: -5,
                       transition: { duration: 0.2 }
                     }}
-                    className="group bg-gray-50 rounded-xl p-6 text-center hover:bg-blue-50 hover:shadow-md transition-all duration-300 cursor-pointer"
+                    className="group bg-gray-50 rounded-xl p-4 text-center hover:bg-blue-50 hover:shadow-md transition-all duration-300 cursor-pointer"
                   >
-                    <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                    <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">
                       {skill.icon}
                     </div>
-                    <h4 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                    <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                       {skill.name}
                     </h4>
                   </motion.div>
@@ -86,24 +82,24 @@ const Skills = () => {
               </div>
             </motion.div>
           ))}
-        </div>
 
-        {/* Additional Skills Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-semibold mb-4">Always Learning</h3>
-            <p className="text-lg opacity-90 max-w-2xl mx-auto">
-              Technology evolves rapidly, and I'm committed to staying current with the latest trends, 
-              tools, and best practices in web development and software engineering.
-            </p>
-          </div>
-        </motion.div>
+          {/* Learning Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 text-white">
+              <h3 className="text-xl font-semibold mb-3">Always Learning</h3>
+              <p className="text-sm opacity-90 max-w-2xl mx-auto">
+                Technology evolves rapidly, and I'm committed to staying current with the latest trends, 
+                tools, and best practices in web development.
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
