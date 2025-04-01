@@ -15,8 +15,6 @@ export const ABOUT_DATA = {
   description: `I'm Rithesh, a Computer Science Engineering student at JSS STU, Mysore (CGPA: 9.0), with a strong foundation in full-stack web development, AI/ML, and problem solving. I thrive on creating real-world solutions using cutting-edge technologies. From building AI-powered assistants to blockchain-integrated donation platforms, I aim to engineer tomorrow's web with innovation and scalability.`,
   experience: [
     { title: 'Product Engineer Intern', company: 'Deloitte, Bengaluru', period: 'May 2025 – Jul 2025' },
-    { title: 'Software Engineering Intern', company: 'Cisco (Assessment Projects)', period: '2024 – 2025' },
-    { title: 'Full Stack Developer (Internship Projects)', company: 'VoxBiz, FoodLoop, CilliBlog', period: '2024' },
   ],
   education: {
     degree: 'Bachelor of Engineering in Computer Science',
@@ -96,8 +94,6 @@ export const NAV_SECTIONS = [
   { id: 'about', label: 'About', icon: '👨‍💻' },
   { id: 'skills', label: 'Skills', icon: '🚀' },
   { id: 'projects', label: 'Projects', icon: '💼' },
-  { id: 'contact', label: 'Contact', icon: '📧' },
-  { id: 'achievements', label: 'Achievements', icon: '🏆' },
 ];
 
 export const TERMINAL_COMMANDS = {
