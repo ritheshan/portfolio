@@ -37,7 +37,7 @@ const Navbar = ({ onTerminalToggle, isTerminalMode }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+if (isTerminalMode) return null;
   return (
     <motion.nav
       initial={{ y: -100 }}
