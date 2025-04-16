@@ -1,41 +1,42 @@
 import { motion } from 'framer-motion';
 import { PROJECTS } from '../constants';
-import { fadeInUp, staggerContainer, useScrollAnimation } from '../utils/animations';
 
 const Projects = () => {
-  const scrollAnimation = useScrollAnimation();
-
   return (
-    <section id="projects" className="py-20 bg-gray-50">
+    <section id="projects" className="h-screen flex items-center justify-center bg-gray-50">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.h2
-          {...scrollAnimation}
-          variants={fadeInUp}
-          className="text-4xl font-bold text-center mb-16 text-gray-900"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900"
         >
           Featured Projects
         </motion.h2>
 
         <motion.div
-          {...scrollAnimation}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[70vh]"
         >
           {PROJECTS.map((project, index) => (
             <motion.div
               key={project.id}
-              variants={fadeInUp}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
               className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow group"
             >
               {/* Project Image */}
-              <div className="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                <h3 className="text-2xl font-bold text-white">{project.title}</h3>
+              <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                <h3 className="text-lg font-bold text-white">{project.title}</h3>
               </div>
 
               {/* Project Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{project.title}</h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">{project.description}</p>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{project.title}</h3>
+                <p className="text-gray-600 mb-3 leading-relaxed text-sm">{project.description}</p>
 
                 {/* Technologies */}
                 <div className="mb-4 flex flex-wrap gap-2">
