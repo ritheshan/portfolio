@@ -1,22 +1,63 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
+import Landing from './components/Landing';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import TerminalUI from './components/TerminalUI';
 
 function App() {
+  const [isTerminalMode, setIsTerminalMode] = useState(false);
+
+  const toggleTerminalMode = () => {
+    setIsTerminalMode(!isTerminalMode);
+  };
+
   return (
-    <div className="min-h-screen bg-slate-900">
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-white">
+        <Navbar 
+          onTerminalToggle={toggleTerminalMode} 
+          isTerminalMode={isTerminalMode} 
+        />
+        
+        <AnimatePresence mode="wait">
+          {isTerminalMode ? (
+            <motion.div
+              key="terminal"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <TerminalUI isVisible={true} onClose={toggleTerminalMode} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="portfolio"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Landing onSectionClick={(sectionId) => {
+                const element = document.getElementById(sectionId);
+                element?.scrollIntoView({ behavior: 'smooth' });
+              }} />
+              <About />
+              <Skills />
+              <Projects />
+              <Contact />
+              <Footer />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </ThemeProvider>
   );
 }
 
