@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
-import Landing from './components/Landing';
+import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import TerminalUI from './components/TerminalUI';
+import SimpleScrollContainer from './components/SimpleScrollContainer';
 
 function App() {
   const [isTerminalMode, setIsTerminalMode] = useState(false);
@@ -44,15 +45,14 @@ function App() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Landing onSectionClick={(sectionId) => {
-                const element = document.getElementById(sectionId);
-                element?.scrollIntoView({ behavior: 'smooth' });
-              }} />
-              <About />
-              <Skills />
-              <Projects />
-              <Contact />
-              <Footer />
+              <SimpleScrollContainer>
+                <Hero />
+                <About />
+                <Skills />
+                <Projects />
+                <Contact />
+                <Footer />
+              </SimpleScrollContainer>
             </motion.div>
           )}
         </AnimatePresence>
