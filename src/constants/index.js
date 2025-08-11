@@ -1,8 +1,9 @@
 export const SITE_CONFIG = {
   name: 'Rithesh',
-  title: 'Full Stack Developer & ML Enthusiast',
+  title: 'Engineering Tomorrow\'s Web',
   email: 'contact@rithesh.dev',
-  profileImage: '/src/assets/profile-placeholder.svg',
+  profileImage: '/src/assets/my_image.png',
+  description: 'Hello World! 🌍 Crafting innovative digital experiences with cutting-edge technologies.',
   socials: {
     github: 'https://github.com/ritheshan',
     linkedin: 'https://linkedin.com/in/ritheshan',
@@ -78,10 +79,10 @@ export const PROJECTS = [
 ];
 
 export const NAV_SECTIONS = [
-  { id: 'about', title: 'About', icon: '👨‍�' },
-  { id: 'skills', title: 'Skills', icon: '🚀' },
-  { id: 'projects', title: 'Projects', icon: '�' },
-  { id: 'contact', title: 'Contact', icon: '�' },
+  { id: 'about', label: 'About', icon: '👨‍💻' },
+  { id: 'skills', label: 'Skills', icon: '🚀' },
+  { id: 'projects', label: 'Projects', icon: '💼' },
+  { id: 'contact', label: 'Contact', icon: '📧' },
 ];
 
 export const TERMINAL_COMMANDS = {
