@@ -104,7 +104,8 @@ export const TERMINAL_COMMANDS = {
 - ls: List available sections
 - cd [section]: Navigate to a section (about, skills, projects, achievements, contact)
 - clear: Clear the terminal screen
-- whoami: Display information about me`,
+- whoami: Check out who are you
+- whoru: Guess it who am i`
   },
   ls: {
     description: 'List available sections',
@@ -115,7 +116,11 @@ export const TERMINAL_COMMANDS = {
 - achievements/ Hackathons, volunteering, highlights
 - contact/      Get in touch information`,
   },
-  whoami: {
+    whoami: {
+    description: 'Display information about you',
+    output: 'YOU ARE WHAT YOU ARE 🥸'
+  },
+  whoru: {
     description: 'Display information about me',
     output: `${SITE_CONFIG.name} - ${SITE_CONFIG.title}
 Email: ${SITE_CONFIG.email}
