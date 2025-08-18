@@ -1,5 +1,13 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
+import mercuryImg from '../assets/planets/mercury.svg';
+import venusImg from '../assets/planets/venus.svg';
+import earthImg from '../assets/planets/earth.svg';
+import marsImg from '../assets/planets/mars.jpeg';
+import jupiterImg from '../assets/planets/jupiter.svg';
+import saturnImg from '../assets/planets/saturn1.svg';
+import uranusImg from '../assets/planets/uranus.svg';
+import neptuneImg from '../assets/planets/neptune.svg';
 
 const ThemeToggle = () => {
   const { theme, toggleToNextTheme } = useTheme();
@@ -15,7 +23,16 @@ const ThemeToggle = () => {
         title={`Current: ${theme.name} - Click to switch`}
       >
         <motion.img
-          src={theme.planetImg}
+          src={{
+            Mercury: mercuryImg,
+            Venus: venusImg,
+            Earth: earthImg,
+            Mars: marsImg,
+            Jupiter: jupiterImg,
+            Saturn: saturnImg,
+            Uranus: uranusImg,
+            Neptune: neptuneImg
+          }[theme.name]}
           alt={theme.name}
           animate={{ rotate: 360 }}
           transition={{
