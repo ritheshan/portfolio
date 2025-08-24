@@ -6,7 +6,7 @@ import myImage from '../assets/my_image.png';
 const Hero = () => {
   const { theme } = useTheme();
 
-  const headingWords = ["Hello", "World,", "I'm", "Rithesh."];
+  const headingWords = ["hlo", "World,", "I'm", "Rithesh."];
   const subheadingWords = ["Engineering", "Tomorrow's", "Web"];
 
   return (
