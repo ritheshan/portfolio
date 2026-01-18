@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { NAV_SECTIONS, SITE_CONFIG } from '../constants';
 import ThemeToggle from './ThemeToggle';
@@ -7,6 +8,40 @@ const Navbar = ({ onTerminalToggle, isTerminalMode }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Check if we're on the home page
+  const isHomePage = location.pathname === '/';
+
+  // Handle navigation to section
+  const handleSectionClick = (e, sectionId) => {
+    e.preventDefault();
+    
+    if (isHomePage) {
+      // If on home page, just scroll to the section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If on another page, navigate to home with hash
+      navigate(`/#${sectionId}`);
+    }
+  };
+
+  // Scroll to section after navigation
+  useEffect(() => {
+    if (location.hash && isHomePage) {
+      const sectionId = location.hash.replace('#', '');
+      const element = document.getElementById(sectionId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location, isHomePage]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,23 +86,25 @@ if (isTerminalMode) return null;
     >
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         {/* Logo */}
-        <motion.a 
-          href="#home" 
-          className="text-xl font-bold text-gray-900"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {SITE_CONFIG.name}<span className="text-blue-600">.</span>
-        </motion.a>
+        <Link to="/">
+          <motion.span 
+            className="text-xl font-bold text-gray-900 cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {SITE_CONFIG.name}<span className="text-blue-600">.</span>
+          </motion.span>
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden items-center space-x-8 md:flex">
           {NAV_SECTIONS.map((section) => (
             <motion.a
               key={section.id}
-              href={`#${section.id}`}
+              href={`/#${section.id}`}
+              onClick={(e) => handleSectionClick(e, section.id)}
               className={`relative font-medium transition-colors duration-200 ${
-                activeSection === section.id 
+                activeSection === section.id && isHomePage
                   ? 'text-blue-600' 
                   : 'text-gray-600 hover:text-gray-900'
               }`}
@@ -75,7 +112,7 @@ if (isTerminalMode) return null;
               whileTap={{ y: 0 }}
             >
               {section.label}
-              {activeSection === section.id && (
+              {activeSection === section.id && isHomePage && (
                 <motion.div
                   className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600"
                   layoutId="activeSection"
@@ -86,6 +123,20 @@ if (isTerminalMode) return null;
               )}
             </motion.a>
           ))}
+          
+          {/* Blog Link */}
+          <Link
+            to="/blog"
+            className="relative font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200"
+          >
+            <motion.span
+              whileHover={{ y: -2 }}
+              whileTap={{ y: 0 }}
+              className="inline-block"
+            >
+              Blog
+            </motion.span>
+          </Link>
           
           {/* Theme Toggle */}
           <ThemeToggle />
@@ -158,17 +209,29 @@ if (isTerminalMode) return null;
             {NAV_SECTIONS.map((section) => (
               <a
                 key={section.id}
-                href={`#${section.id}`}
+                href={`/#${section.id}`}
                 className={`block py-2 px-3 rounded-lg text-base font-medium transition-colors ${
-                  activeSection === section.id
+                  activeSection === section.id && isHomePage
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                 }`}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  handleSectionClick(e, section.id);
+                  setMobileMenuOpen(false);
+                }}
               >
                 {section.label}
               </a>
             ))}
+            
+            {/* Blog Link - Mobile */}
+            <Link
+              to="/blog"
+              className="block py-2 px-3 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              📝 Blog
+            </Link>
             
             {onTerminalToggle && (
               <motion.button

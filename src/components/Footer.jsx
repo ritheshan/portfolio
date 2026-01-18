@@ -106,9 +106,7 @@ const Footer = () => {
             transition={{ delay: 0.8, duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <p className="text-gray-600 mb-2">
-              Built with ❤️ using <span className="font-semibold">React</span>, <span className="font-semibold">Tailwind CSS</span>, and <span className="font-semibold">Framer Motion</span>
-            </p>
+
             <p className="text-gray-500 text-sm">
               © {currentYear} {SITE_CONFIG.name}. All rights reserved.
             </p>
