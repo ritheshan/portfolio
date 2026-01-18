@@ -1,3 +1,10 @@
+import voxbiz1 from '../assets/projects/voxbiz.png';
+import voxbiz2 from '../assets/projects/voxbiz2.png';
+import foodloop1 from '../assets/projects/foodloop.png';
+import foodloop2 from '../assets/projects/foodloop2.png';
+import cilliblog1 from '../assets/projects/cilliblog.png';
+import cilliblog2 from '../assets/projects/cilliblog2.png';
+
 export const SITE_CONFIG = {
   name: 'Rithesh N',
   title: "Engineering Tomorrow's Web",
@@ -49,8 +56,8 @@ export const PROJECTS = [
     description: 'A Gen-AI-driven business intelligence platform enabling natural language queries that are converted into SQL and visualized as charts/tables in real time. Built with React, NLP, and PostgreSQL.',
     technologies: ['React', 'Node.js', 'PostgreSQL', 'NLP', 'LangChain'],
     github: 'https://github.com/ritheshan/VoxBiz',
-    demo: '',
-    image: '/api/placeholder/400/300',
+    demo: 'https://voxbiz.rithesh.tech/',
+    images: [voxbiz1, voxbiz2],
   },
   {
     id: 2,
@@ -58,8 +65,8 @@ export const PROJECTS = [
     description: 'Blockchain-integrated food donation app connecting donors with NGOs. Includes donation tracking, NFT certificate minting, geolocation, spoilage detection (Google Vision), and dashboards.',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Hardhat', 'IPFS'],
     github: 'https://github.com/ritheshan/FoodLoop',
-    demo: '',
-    image: '/api/placeholder/400/300',
+    demo: 'https://food-loop-123.vercel.app/',
+    images: [foodloop1, foodloop2],
   },
   {
     id: 3,
@@ -67,26 +74,8 @@ export const PROJECTS = [
     description: 'A MERN stack blog platform with role-based access. Admins manage CRUD operations on posts, while users browse categorized posts (trending, sports, devotion).',
     technologies: ['React', 'MongoDB', 'Express', 'Node.js'],
     github: 'https://github.com/ritheshan/blog-app',
-    demo: '',
-    image: '/api/placeholder/400/300',
-  },
-  {
-    id: 4,
-    title: 'Journey Quest',
-    description: 'A country-tracking travel app with interactive SVG maps and PostgreSQL backend, allowing users to log visited countries and visualize their journeys.',
-    technologies: ['Node.js', 'Express', 'PostgreSQL', 'SVG'],
-    github: '',
-    demo: '',
-    image: '/api/placeholder/400/300',
-  },
-  {
-    id: 5,
-    title: 'Password Manager',
-    description: 'A secure CLI-based password manager built in Python using the Cryptography library to encrypt and safely store credentials.',
-    technologies: ['Python', 'Cryptography'],
-    github: '',
-    demo: '',
-    image: '/api/placeholder/400/300',
+    demo: 'https://cilliblog.vercel.app/',
+    images: [cilliblog1, cilliblog2],
   },
 ];
 
