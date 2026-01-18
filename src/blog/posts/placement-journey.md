@@ -237,5 +237,7 @@ they always reach.
 You are not late.  
 You are just being prepared for the right moment.
 
+I shared my friend’s journey, but in truth, it represents the story of many students out there who are walking the same path of patience, rejections, and relentless effort.
+
 > **Hope is a good thing.  
 > And good things never die. ❤️**
