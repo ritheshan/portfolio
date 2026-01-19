@@ -57,20 +57,31 @@ function App() {
     setIsTerminalMode(!isTerminalMode);
   };
 
-  // Track global profile views
+  // Track global profile views (once per session)
   useEffect(() => {
     const ref = doc(db, "stats", "profile");
 
     const track = async () => {
       try {
         const snap = await getDoc(ref);
+        const hasViewedThisSession = sessionStorage.getItem('profile-viewed');
+        
         if (!snap.exists()) {
           await setDoc(ref, { views: 1 });
           setProfileViews(1);
+          sessionStorage.setItem('profile-viewed', 'true');
         } else {
-          await updateDoc(ref, { views: increment(1) });
           const data = snap.data();
-          setProfileViews(data.views + 1);
+          
+          // Only increment if this is a new session
+          if (!hasViewedThisSession) {
+            await updateDoc(ref, { views: increment(1) });
+            setProfileViews(data.views + 1);
+            sessionStorage.setItem('profile-viewed', 'true');
+          } else {
+            // Just show current count without incrementing
+            setProfileViews(data.views);
+          }
         }
       } catch (error) {
         console.error("Error tracking profile views:", error);
