@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import { postList } from "./posts";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
+
+const reactionEmojis = ["💯", "💎", "🎯", "🤯", "⚡", "🧠"];
+const reactionKeys = ["hundred", "diamond", "target", "mindblown", "bolt", "brain"];
 
 // Helper function to safely format dates
 const formatDate = (dateValue) => {
@@ -58,8 +64,30 @@ const getSortableDate = (dateValue) => {
 
 export default function BlogList() {
   const { theme } = useTheme();
+  const [blogStats, setBlogStats] = useState({});
   
   const allPosts = [...postList].sort((a, b) => getSortableDate(b.date) - getSortableDate(a.date));
+
+  // Fetch views and reactions for all blogs
+  useEffect(() => {
+    const fetchStats = async () => {
+      const stats = {};
+      for (const post of postList) {
+        try {
+          const ref = doc(db, "blogs", post.slug);
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            stats[post.slug] = snap.data();
+          }
+        } catch (error) {
+          console.error("Error fetching blog stats:", error);
+        }
+      }
+      setBlogStats(stats);
+    };
+    
+    fetchStats();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white pt-24 pb-16">
@@ -121,21 +149,59 @@ export default function BlogList() {
                   <p className="text-gray-600 leading-relaxed">
                     {post.description}
                   </p>
-                  <div className={`mt-4 inline-flex items-center text-${theme.colors.primary}-600 font-medium group-hover:gap-2 transition-all`}>
-                    Read more
-                    <svg 
-                      className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M9 5l7 7-7 7" 
-                      />
-                    </svg>
+                  
+                  {/* Views and Reactions - WhatsApp/LinkedIn style */}
+                  <div className="mt-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      {/* Views */}
+                      <span className="flex items-center gap-1 text-sm text-gray-500">
+                        👁️ {blogStats[post.slug]?.views || 0}
+                      </span>
+                      
+                      {/* Compact Reactions - stacked emojis */}
+                      {blogStats[post.slug]?.reactions && 
+                        Object.values(blogStats[post.slug].reactions).some(v => v > 0) && (
+                        <div className="flex items-center">
+                          <div className="flex -space-x-1">
+                            {reactionKeys.map((key, i) => {
+                              const count = blogStats[post.slug]?.reactions?.[key] || 0;
+                              if (count > 0) {
+                                return (
+                                  <span 
+                                    key={key} 
+                                    className="inline-flex items-center justify-center w-5 h-5 text-xs bg-gray-100 rounded-full border border-white"
+                                    title={`${reactionEmojis[i]} ${count}`}
+                                  >
+                                    {reactionEmojis[i]}
+                                  </span>
+                                );
+                              }
+                              return null;
+                            })}
+                          </div>
+                          <span className="ml-1.5 text-xs text-gray-500">
+                            {Object.values(blogStats[post.slug]?.reactions || {}).reduce((a, b) => a + b, 0)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className={`inline-flex items-center text-${theme.colors.primary}-600 font-medium group-hover:gap-2 transition-all`}>
+                      Read more
+                      <svg 
+                        className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M9 5l7 7-7 7" 
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </article>
               </Link>
