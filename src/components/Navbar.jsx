@@ -13,6 +13,9 @@ const Navbar = ({ onTerminalToggle, isTerminalMode, profileViews }) => {
   
   // Check if we're on the home page
   const isHomePage = location.pathname === '/';
+  
+  // Check if we're on a blog page
+  const isBlogPage = location.pathname.startsWith('/blog');
 
   // Handle navigation to section
   const handleSectionClick = (e, sectionId) => {
@@ -78,7 +81,7 @@ if (isTerminalMode) return null;
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className={`fixed z-[100] w-full transition-all duration-300 ${
+      className={`${isBlogPage ? 'relative' : 'fixed'} z-[100] w-full transition-all duration-300 ${
         isScrolled 
           ? 'bg-white/95 shadow-lg backdrop-blur-sm border-b border-gray-200' 
           : 'bg-white/80 backdrop-blur-sm'
