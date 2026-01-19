@@ -1,8 +1,20 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { marked } from "marked";
 import { motion } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import { posts } from "./posts";
+import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+import { db } from "../lib/firebase";
+
+const reactions = [
+  { key: "hundred", emoji: "💯" },
+  { key: "diamond", emoji: "💎" },
+  { key: "target", emoji: "🎯" },
+  { key: "mindblown", emoji: "🤯" },
+  { key: "bolt", emoji: "⚡" },
+  { key: "brain", emoji: "🧠" }
+];
 
 // Helper function to safely format dates
 const formatDate = (dateValue) => {
@@ -48,6 +60,71 @@ export default function BlogPost() {
   const { slug } = useParams();
   const { theme } = useTheme();
   const post = posts[slug];
+
+  const [views, setViews] = useState(0);
+  const [reacts, setReacts] = useState({});
+  const [userReacts, setUserReacts] = useState({});
+
+  // Load user's reactions from localStorage
+  useEffect(() => {
+    if (!slug) return;
+    const stored = localStorage.getItem(`blog-reactions-${slug}`);
+    if (stored) {
+      setUserReacts(JSON.parse(stored));
+    }
+  }, [slug]);
+
+  // Track blog views and load reactions
+  useEffect(() => {
+    if (!slug) return;
+    
+    const ref = doc(db, "blogs", slug);
+
+    const init = async () => {
+      try {
+        const snap = await getDoc(ref);
+
+        if (!snap.exists()) {
+          await setDoc(ref, { views: 1, reactions: {} });
+          setViews(1);
+          setReacts({});
+        } else {
+          await updateDoc(ref, { views: increment(1) });
+          const data = snap.data();
+          setViews(data.views + 1);
+          setReacts(data.reactions || {});
+        }
+      } catch (error) {
+        console.error("Error tracking blog views:", error);
+      }
+    };
+
+    init();
+  }, [slug]);
+
+  const react = async (key) => {
+    // Check if user already reacted with this emoji
+    if (userReacts[key]) {
+      return; // Already reacted
+    }
+
+    try {
+      const ref = doc(db, "blogs", slug);
+      await updateDoc(ref, {
+        [`reactions.${key}`]: increment(1)
+      });
+
+      // Update local state
+      setReacts(r => ({ ...r, [key]: (r[key] || 0) + 1 }));
+      
+      // Save to localStorage
+      const newUserReacts = { ...userReacts, [key]: true };
+      setUserReacts(newUserReacts);
+      localStorage.setItem(`blog-reactions-${slug}`, JSON.stringify(newUserReacts));
+    } catch (error) {
+      console.error("Error adding reaction:", error);
+    }
+  };
 
   if (!post) {
     return (
@@ -129,6 +206,33 @@ export default function BlogPost() {
                   </svg>
                   {formatDate(post.frontmatter.date)}
                 </time>
+                <span className="flex items-center gap-1">
+                  👁️ {views}
+                </span>
+              </div>
+
+              {/* Reactions - Compact inline style */}
+              <div className="flex items-center gap-1 mt-4">
+                {reactions.map(r => (
+                  <motion.button
+                    key={r.key}
+                    onClick={() => react(r.key)}
+                    disabled={userReacts[r.key]}
+                    className={`flex items-center gap-0.5 px-2 py-1 rounded-full transition-colors text-sm ${
+                      userReacts[r.key] 
+                        ? 'bg-blue-100 border border-blue-300 cursor-default' 
+                        : 'hover:bg-gray-100 cursor-pointer'
+                    }`}
+                    whileHover={!userReacts[r.key] ? { scale: 1.1 } : {}}
+                    whileTap={!userReacts[r.key] ? { scale: 0.9 } : {}}
+                    title={userReacts[r.key] ? 'You reacted' : `React with ${r.emoji}`}
+                  >
+                    <span>{r.emoji}</span>
+                    {(reacts[r.key] || 0) > 0 && (
+                      <span className="text-xs text-gray-600">{reacts[r.key]}</span>
+                    )}
+                  </motion.button>
+                ))}
               </div>
               {post.frontmatter.description && (
                 <p className="mt-4 text-xl text-gray-600 leading-relaxed">
